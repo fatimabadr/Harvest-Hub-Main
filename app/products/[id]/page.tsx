@@ -41,6 +41,10 @@ export default function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         const productId = params.id;
+        if (!productId) {
+          setLoading(false);
+          return;
+        }
         const response = await fetch(`/api/products?limit=1000`);
         if (response.ok) {
           const products = await response.json();

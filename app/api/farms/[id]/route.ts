@@ -1,16 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 
-type Props = {
-  params: { id: string }
-}
-
 export async function GET(
   request: NextRequest,
-  props: Props
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await Promise.resolve(props.params);
+    const { id } = await params;
 
     
     const farmResult = await query(

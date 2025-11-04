@@ -324,14 +324,16 @@ export default function CreatePackage({ farmId, farmName }: CreatePackageProps =
   };
 
   const checkFormValidity = (currentErrors: FormErrors) => {
-    const isValid = Object.keys(currentErrors).length === 0 &&
+    const isValid = Boolean(
+      Object.keys(currentErrors).length === 0 &&
       packageData.name.trim().length >= 3 &&
       packageData.farmer.trim().length > 0 &&
       packageData.description.trim().length >= 10 &&
       (farmId || Number(packageData.farmId) > 0) &&
       Number(packageData.retailValue) > 0 &&
       packageData.items.length > 0 &&
-      packageData.tags.length > 0;
+      packageData.tags.length > 0
+    );
     
     setIsFormValid(isValid);
     return isValid;

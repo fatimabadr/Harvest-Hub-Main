@@ -25,7 +25,7 @@ async function verifyProductOwnership(productId: number, farmId: number): Promis
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authHeader = req.headers.get("authorization");
@@ -55,7 +55,8 @@ export async function GET(
       );
     }
 
-    const productId = parseInt(params.id);
+    const { id } = await params;
+    const productId = parseInt(id);
     const result = await query(
       `SELECT 
         product_id as id,
@@ -93,7 +94,7 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authHeader = req.headers.get("authorization");
@@ -123,7 +124,8 @@ export async function PUT(
       );
     }
 
-    const productId = parseInt(params.id);
+    const { id } = await params;
+    const productId = parseInt(id);
     
     
     if (!(await verifyProductOwnership(productId, farmId))) {
@@ -169,7 +171,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authHeader = req.headers.get("authorization");
@@ -199,7 +201,8 @@ export async function DELETE(
       );
     }
 
-    const productId = parseInt(params.id);
+    const { id } = await params;
+    const productId = parseInt(id);
     
     
     if (!(await verifyProductOwnership(productId, farmId))) {

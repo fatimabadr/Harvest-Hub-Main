@@ -7,7 +7,7 @@ const jwtSecret = process.env.JWT_SECRET || "fallback-secret";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authHeader = req.headers.get("authorization");
@@ -24,7 +24,8 @@ export async function DELETE(
     try {
       const decoded = jwt.verify(token, jwtSecret) as any;
       const userId = decoded.id;
-      const addressId = parseInt(params.id);
+      const { id } = await params;
+      const addressId = parseInt(id);
 
       
       const checkResult = await query(

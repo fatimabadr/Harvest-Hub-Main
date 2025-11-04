@@ -123,7 +123,7 @@ export default function ManageProductsPage() {
         },
         body: JSON.stringify({
           name: editingProduct.name,
-          price: parseFloat(editingProduct.price as any),
+          price: editingProduct.price || 0,
           unit: editingProduct.unit,
           category: editingProduct.category,
           image_url: editingProduct.image_url || null,
@@ -136,7 +136,7 @@ export default function ManageProductsPage() {
             ? {
                 ...p,
                 name: editingProduct.name!,
-                price: parseFloat(editingProduct.price as any),
+                price: editingProduct.price || 0,
                 unit: editingProduct.unit!,
                 category: editingProduct.category!,
                 image_url: editingProduct.image_url,
@@ -479,7 +479,7 @@ export default function ManageProductsPage() {
                               onChange={(e) =>
                                 setEditingProduct({
                                   ...editingProduct,
-                                  price: e.target.value,
+                                  price: parseFloat(e.target.value) || 0,
                                 })
                               }
                               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
